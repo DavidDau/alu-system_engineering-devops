@@ -4,6 +4,13 @@
 sudo apt-get update
 sudo apt-get -y install nginx
 sudo ufw allow 'Nginx HTTP'
+echo "This is David from Holberton School :)"| sudo tee /var/www/html/index.html > /dev/null
+
+# codes to redirect a specific endpoint (eg: redirect /redirect_me to https://www.github.com/daviddau)
+string_for_replacement="server_name _;\n\trewrite ^\/redirect_me https:\/\/www.github.com\/daviddau permanent;"
+sudo sed -i "s/server_name _;/$string_for_replacement/" /etc/nginx/sites-enabled/default
+
+# codes to create error page and add a redirect for error 404
 echo "<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -234,14 +241,7 @@ echo "<!DOCTYPE html>
         });
     </script>
 </body>
-</html>" | sudo tee /var/www/html/index.html > /dev/null
-
-# codes to redirect a specific endpoint (eg: redirect /redirect_me to https://www.github.com/daviddau)
-string_for_replacement="server_name _;\n\trewrite ^\/redirect_me https:\/\/www.github.com\/daviddau permanent;"
-sudo sed -i "s/server_name _;/$string_for_replacement/" /etc/nginx/sites-enabled/default
-
-# codes to create error page and add a redirect for error 404
-echo "Ceci n'est pas une page" | sudo tee /var/www/html/404.html > /dev/null
+</html>" " | sudo tee /var/www/html/404.html > /dev/null
 string_for_replacement="listen 80 default_server;\n\terror_page 404 \/404.html;\n\tlocation = \/404.html {\n\t\troot \/var\/www\/html;\n\t\tinternal;\n\t}"
 sudo sed -i "s/listen 80 default_server;/$string_for_replacement/" /etc/nginx/sites-enabled/default
 
