@@ -1,5 +1,0 @@
-#!/usr/bin/env bash
-# bash script that configures 'nginx' to run & listen to port 80
-cat /etc/nginx/sites-availalbe > /etc/nginx/sites-enabled/default
-sudo service nginx restart
-rm /run/nginx.pid
